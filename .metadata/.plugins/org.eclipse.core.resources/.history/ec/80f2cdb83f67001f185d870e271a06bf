@@ -1,0 +1,20 @@
+/** 
+ * 
+ */
+import io.sarl.api.core.Initialize
+import io.sarl.api.core.Lifecycle
+
+/** 
+ * 
+ */
+agent Boot {
+	uses Lifecycle
+
+	on Initialize {
+		spawn(CuboA)
+		spawn(CuboB)
+		spawn(CuboC)
+		killMe
+	}
+
+}

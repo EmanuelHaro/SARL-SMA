@@ -1,0 +1,115 @@
+/** 
+ * 
+ */
+import io.sarl.api.core.Destroy
+import io.sarl.api.core.Initialize
+import io.sarl.api.core.Logging
+import io.sarl.api.core.DefaultContextInteractions
+import io.sarl.api.core.Schedules
+
+/** 
+ * 
+ */
+agent CuboC {
+	uses DefaultContextInteractions, Schedules, Logging
+
+	var posicionCuboC : int
+
+	val posicionDeseada = 2
+	
+	on Initialize {
+		//info("Esperando inicializacion de los 3 cubos")
+		loggingName = "CuboC"
+		val taskVar = task("waiting_for_partner")
+
+		posicionCuboC = 3
+		
+		taskVar.every(5000) [
+			if (defaultSpace.numberOfStrongParticipants > 3) {
+				// info("Elemntos instanciados")
+				if (posicionCuboC == posicionDeseada) {
+					info("Estoy satisfecho")
+				} else {
+					emit(new PedirPosicion)
+				}
+				taskVar.cancel
+			}
+		]
+		in(2000) [
+			if (posicionCuboC == posicionDeseada) {
+				info("Estoy satisfecho")
+			} else {
+				info("Quede insatisfecho")
+			}
+		]
+	}
+
+	on PedirPosicion {
+		emit(new PosicionCuboC(posicionCuboC, posicionDeseada))
+	}
+
+	on PosicionCuboB {
+		if (occurrence.posActual == posicionDeseada) {
+			if (occurrence.posDeseada == posicionCuboC) {
+				emit(new CambiarPosicionACuboB(posicionCuboC))
+				posicionCuboC = occurrence.posActual
+				info("Cambio con B")
+			} else {
+				info("huyo de B")
+			}
+		} else {
+			info("todo ok")
+		}
+	}
+
+	on PosicionCuboA {
+		if (occurrence.posActual == posicionDeseada) {
+			if (occurrence.posDeseada == posicionCuboC) {
+				emit(new CambiarPosicionACuboA(posicionCuboC))
+				posicionCuboC = occurrence.posActual
+				info("Cambio con A")
+			} else {
+				info("huyo de A")
+			}
+		} else {
+			info("todo ok")
+		}
+	}
+	
+	
+	on CambiarPosicionACuboC{
+		if (posicionDeseada == occurrence.posActual) {
+			posicionCuboC = occurrence.posActual
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	on Destroy {
+		// Event trigger when the agent is destroyed from the system.
+		// You should put all the resource releasing statements in this block of code.
+		info("The agent was stopped.")
+	}
+
+	def EstaSatisfescho {
+		info("Estoy satisfecho")
+	}
+
+	def Huir {
+		info("Huyo")
+	}
+
+	def Molestar {
+		info("Molesto")
+	}
+
+
+}

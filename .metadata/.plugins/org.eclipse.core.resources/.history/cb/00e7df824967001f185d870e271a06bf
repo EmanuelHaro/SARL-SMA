@@ -1,0 +1,54 @@
+/** 
+ * 
+ */
+
+/** 
+ * 
+ */
+event PosicionMesa {
+
+	val posActual : int
+	val posDeseada : int
+
+	new (i : int , j: int) {
+		posActual = i
+		posDeseada = j
+	}
+
+}
+
+event PosicionCuboA {
+
+	val index : int
+
+	new (i : int) {
+		index = i
+	}
+
+}
+
+event PosicionCuboB {
+
+	val index : int
+
+	new (i : int) {
+		index = i
+	}
+
+}
+
+event PosicionCuboC {
+
+	val index : int
+
+	new (i : int) {
+		index = i
+	}
+
+}
+
+event PedirPosicion{
+	
+}
+
+

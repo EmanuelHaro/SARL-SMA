@@ -1,0 +1,52 @@
+/** 
+ * 
+ */
+
+/** 
+ * 
+ */
+event PosicionMesa {
+
+	val index : int
+
+	new (i : int) {
+		index = i
+	}
+
+}
+
+event PosicionCuboA {
+
+	val index : int
+
+	new (i : int) {
+		index = i
+	}
+
+}
+
+event PosicionCuboB {
+
+	val index : int
+
+	new (i : int) {
+		index = i
+	}
+
+}
+
+event PosicionCuboC {
+
+	val index : int
+
+	new (i : int) {
+		index = i
+	}
+
+}
+
+event PedirPosicion{
+	
+}
+
+

@@ -1,0 +1,9 @@
+/** 
+ * 
+ */
+
+capacity Capacidades {
+	def debug(s : String)
+
+	def informacion(s : String)
+}

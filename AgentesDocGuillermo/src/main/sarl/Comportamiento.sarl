@@ -1,0 +1,26 @@
+
+
+import io.sarl.api.core.Logging
+
+/** 
+ * 
+ */
+behavior Comportamiento {
+	// Defining a modifiable element of the mental state
+	//var mentalStateElement1 : String
+	// Defining an unmodifiable element of the mental state
+	//val mentalStateElement2 : boolean = true
+	uses Logging
+
+	on RecibeEvento {
+		info("recibe evento: " + occurrence.value)
+	}
+	// Defining an action without parameter nor return type
+	
+	// Defining an action with a variadic parameter and no return type
+	def MostrarParametro(param : int*) {
+		info("params are " + param)
+	}
+}
+
+

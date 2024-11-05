@@ -1,0 +1,118 @@
+/** 
+ * 
+ */
+import io.sarl.api.core.Destroy
+import io.sarl.api.core.Initialize
+import io.sarl.api.core.Logging
+import io.sarl.api.core.DefaultContextInteractions
+import io.sarl.api.core.Schedules
+
+
+/** 
+ * 
+ */
+agent CuboA {
+	uses DefaultContextInteractions, Schedules, Logging
+	
+	val name = "CuboA"
+	var posicionCuboA : int
+	val posicionDeseada = 1
+	val objetivo = "Mesa"
+	
+	
+	
+	on Initialize {
+		//info("Esperando inicializacion de los 3 cubos")
+		loggingName = name
+
+		posicionCuboA = 1
+		
+		val taskVar = task("esperando_cubos")
+
+		taskVar.every(5000) [
+			if (defaultSpace.numberOfStrongParticipants >= 4) {
+				//info("Elemntos instanciados")
+				if (posicionCuboA == posicionDeseada){
+					info("Estoy satisfecho")
+				}
+				else {
+					info("No estoy satisfecho")
+					//emit(new PedirPosicion)
+				}
+				taskVar.cancel
+			}
+		]
+		
+		in(2000) [
+			if (posicionCuboA == posicionDeseada) {
+				info("Estoy satisfecho")
+			} else {
+				info("Quede insatisfecho")
+			}
+		]
+	}
+	
+		
+	def EstaSatisfescho {
+		info("Estoy satisfecho")
+	}
+
+	def Huir {
+		info("Huyo")
+	}
+
+	def Molestar {
+		info("Molesto")
+	}
+
+	on Destroy {
+		// Event trigger when the agent is destroyed from the system.
+		// You should put all the resource releasing statements in this block of code.
+		info("The agent was stopped.")
+	}
+}
+
+
+
+
+
+/* on PosicionMesa {
+ * //info("Posicion Mesa: #" + occurrence.posActual)
+ * //posicionCuboA = 2
+ * //emit(new PosicionCuboA(posicionCuboA, posicionDeseada))
+ * }
+ * 
+ * on PosicionCuboB {
+ * if (occurrence.posActual == posicionDeseada) {
+ * if (occurrence.posDeseada == posicionCuboA) {
+ * emit(new CambiarPosicionACuboB(posicionCuboA))
+ * posicionCuboA = occurrence.posActual
+ * info("Cambio con B")
+ * } else {
+ * info("huyo de B")
+ * }
+ * } else {
+ * info("todo ok")
+ * }
+ * }
+
+ * on PosicionCuboC {
+ * if (occurrence.posActual == posicionDeseada) {
+ * if (occurrence.posDeseada == posicionCuboA) {
+ * emit(new CambiarPosicionACuboC(posicionCuboA))
+ * posicionCuboA = occurrence.posActual
+ * info("Cambio con C")
+ * } else {
+ * info("huyo de C")
+ * }
+ * } else {
+ * info("todo ok")
+ * }
+ * }
+
+ * on CambiarPosicionACuboA {
+ * if (posicionDeseada == occurrence.posActual) {
+ * posicionCuboA = occurrence.posActual
+ * }
+ * }
+ */

@@ -1,0 +1,16 @@
+/** 
+ * 
+ */
+
+/** 
+ * 
+ */
+event Ping {
+
+	val index : int
+
+	new (i : int) {
+		index = i
+	}
+
+}

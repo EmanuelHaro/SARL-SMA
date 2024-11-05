@@ -1,0 +1,18 @@
+
+
+import io.sarl.api.core.Logging
+
+//
+//
+
+skill MiPropiaSkill implements Capacidades {
+	uses Logging
+
+	def debug(s : String) {
+		info("DEBUG: " + s)
+	}
+
+	def informacion(s : String) {
+		info("INFO: " + s)
+	}
+}
